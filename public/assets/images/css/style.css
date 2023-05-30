@@ -92,6 +92,7 @@
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
+
   hr {
     margin: 1rem 0;
     color: inherit;
@@ -10635,7 +10636,7 @@
     text-align: center;
   }
   .app-utility-item .icon-badge.icon-badge {
-    background: #ec776c;
+    background: #14ccb0;
     border: 2px solid #fff;
   }
   .app-notifications-dropdown .dropdown-menu {
@@ -11537,3 +11538,11 @@
     }
   }
   
+
+  .transform-component-module_content__FBWxo{
+    width: 100% !important;
+  
+  }
+  .transform-component-module_wrapper__SPB86{
+    width: 100% !important;
+  }

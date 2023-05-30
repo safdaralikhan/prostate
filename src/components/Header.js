@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import Logo from "../assets/images/Prostate-01.png"
 import Profile from "../assets/images/profile.png"
@@ -6,12 +6,59 @@ import { FiUpload } from 'react-icons/fi';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdOutlineColorLens } from 'react-icons/md';
 import { BsDatabaseGear } from 'react-icons/bs';
+import { BiLabel } from 'react-icons/bi';
+
 
 
 
 
 export default function Header() {
 
+const [sidbar, setSidbar]=useState("sidepanel-visible")
+
+useEffect(() => {
+    SidbeFunc()
+
+}, [])
+
+
+const SidbeFunc = ()=>{
+     
+    let w = window.innerWidth;
+    if(w >= 1200) {
+setSidbar("sidepanel-visible")
+        console.log('larger');
+    
+      
+    } else {
+setSidbar("sidepanel-hidden")
+
+      
+        console.log('smaller');
+  
+    }
+  };
+  
+
+  const SidbeFunc2 = ()=>{
+ 
+
+    if (sidbar==="sidepanel-visible") {
+      console.log('visible');
+      setSidbar("sidepanel-hidden")
+   
+      
+    } else {
+      setSidbar("sidepanel-visible")
+
+      console.log('hidden');
+   
+    }
+ 
+  
+  
+  };
+  
 
 
     return (
@@ -24,6 +71,7 @@ export default function Header() {
                             <div className="row justify-content-between align-items-center">
                                 <div className="col-auto">
                                     <Link
+                                    onClick={SidbeFunc2}
                                         id="sidepanel-toggler"
                                         className="sidepanel-toggler d-inline-block d-xl-none"
                                         to="#"
@@ -102,7 +150,7 @@ export default function Header() {
                                                         <div className="col-auto">
                                                             <img
                                                                 className="profile-image"
-                                                                src="assets/images/profiles/profile-1.png"
+                                                                src={Profile}
                                                                 alt=""
                                                             />
                                                         </div>
@@ -119,7 +167,7 @@ export default function Header() {
                                                         {/*//col*/}
                                                     </div>
                                                     {/*//row*/}
-                                                    <Link className="link-mask" href="notifications.html" />
+                                                    <Link className="link-mask" to="#" />
                                                 </div>
                                                 {/*//item*/}
                                                 <div className="item p-3">
@@ -158,7 +206,7 @@ export default function Header() {
                                                         {/*//col*/}
                                                     </div>
                                                     {/*//row*/}
-                                                    <Link className="link-mask" href="notifications.html" />
+                                                    <Link className="link-mask" to="#" />
                                                 </div>
                                                 {/*//item*/}
                                                 <div className="item p-3">
@@ -193,7 +241,7 @@ export default function Header() {
                                                         {/*//col*/}
                                                     </div>
                                                     {/*//row*/}
-                                                    <Link className="link-mask" href="notifications.html" />
+                                                    <Link className="link-mask" to="#"/>
                                                 </div>
                                                 {/*//item*/}
                                                 <div className="item p-3">
@@ -201,7 +249,7 @@ export default function Header() {
                                                         <div className="col-auto">
                                                             <img
                                                                 className="profile-image"
-                                                                src="assets/images/profiles/profile-2.png"
+                                                                src={Profile}
                                                                 alt=""
                                                             />
                                                         </div>
@@ -217,13 +265,13 @@ export default function Header() {
                                                         {/*//col*/}
                                                     </div>
                                                     {/*//row*/}
-                                                    <Link className="link-mask" href="notifications.html" />
+                                                    <Link className="link-mask" to="#" />
                                                 </div>
                                                 {/*//item*/}
                                             </div>
 
                                             <div className="dropdown-menu-footer p-2 text-center">
-                                                <Link href="notifications.html">View all</Link>
+                                                <Link to="#">View all</Link>
                                             </div>
                                         </div>
 
@@ -258,20 +306,20 @@ export default function Header() {
                                             aria-labelledby="user-dropdown-toggle"
                                         >
                                             <li>
-                                                <Link className="dropdown-item" href="account.html">
-                                                    Account
+                                                <Link className="dropdown-item" to="#">
+                                                   Profile
                                                 </Link>
                                             </li>
-                                            <li>
-                                                <Link className="dropdown-item" href="settings.html">
+                                            {/* <li>
+                                                <Link className="dropdown-item" to="#">
                                                     Settings
                                                 </Link>
-                                            </li>
+                                            </li> */}
                                             <li>
                                                 <hr className="dropdown-divider" />
                                             </li>
                                             <li>
-                                                <Link className="dropdown-item" href="login.html">
+                                                <Link className="dropdown-item"to="#">
                                                     Log Out
                                                 </Link>
                                             </li>
@@ -288,10 +336,10 @@ export default function Header() {
 
                 </div>
                 {/* SIDBAR  */}
-                <div id="app-sidepanel" className="app-sidepanel ">
+                <div id="app-sidepanel" className={`app-sidepanel  ${sidbar}`}>
                     <div id="sidepanel-drop" className="sidepanel-drop" />
                     <div className="sidepanel-inner d-flex flex-column">
-                        <Link href="#" id="sidepanel-close" className="sidepanel-close d-xl-none">
+                        <Link onClick={SidbeFunc} href="#" id="sidepanel-close" className="sidepanel-close d-xl-none">
                             ×
                         </Link>
                         <div className="app-branding">
@@ -309,11 +357,11 @@ export default function Header() {
 
                             <div className='container'>
 
-                                <div className=' mt-4' style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }} >
+                                <div className=' mt-4' style={{ backgroundColor: "rgb(63 63 63)" }} >
                                     <span style={{ color: "#14ccb0", fontSize: "large" }} ><i className='mx-2'> <FiUpload size="2em" /></i>Select NifTi File </span>
                                     <div className="row jutify-content-center text-center mb-2">
                                         <div className="col-md-12 mt-4 d-grid gap-2" >
-                                            <button type="button" className="btn btn-primary" style={{ color: "white" }}>Upload</button>
+                                            <button type="button" className="btn " style={{ color: "white" , backgroundColor:"#14ccb0"}}>Upload</button>
                                         </div>
 
                                     </div>
@@ -322,9 +370,9 @@ export default function Header() {
 
                                 </div>
 
-                                <div className=' mt-5' >
+                                <div className=' mt-4' >
                                     <span className='mb-2' style={{ color: "white", fontSize: "15px" }}><BsDatabaseGear size="2em" /><i className='mx-2' > </i>Segmentation options</span>
-                                    <div className="row jutify-content-center text-center " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
+                                    <div className="row jutify-content-center mt-3 " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
                                         <div className="col-md-12 mt-2 " >
                                             <label class="form-label " style={{ color: "white" }}>Modal</label>
                                             <select class="form-select" aria-label="Default select example">
@@ -333,12 +381,12 @@ export default function Header() {
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
                                             </select>
-                                            <div className="col-md-12 mt-4 " >
-                                                <button type="button" className="btn btn-primary w-50 " style={{ color: "white" }} >Run</button>
+                                            <div className="col-md-12 mt-4 text-center " >
+                                                <button type="button" className="btn w-50 " style={{ color: "white" , backgroundColor:"#14ccb0"}} >Run</button>
                                             </div>
                                             <hr style={{ color: "white" }} />
                                             <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped bg-success" style={{ width: "75%" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar progress-bar-striped " style={{ width: "75%",backgroundColor:"#14ccb0" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
 
@@ -349,9 +397,9 @@ export default function Header() {
                                 </div>
 
 
-                                <div className=' mt-5 mb-4' >
-                                    <span style={{ color: "white", fontSize: "15px" }}> <FiUpload size="2em" /><i className='mx-2' style={{ color: "white", fontSize: "large" }}></i>Save Labels</span>
-                                    <div className="row jutify-content-center text-center " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
+                                <div className=' mt-4 mb-4' >
+                                    <span style={{ color: "white", fontSize: "15px" }}> <BiLabel size="2em" /><i className='mx-2' style={{ color: "white", fontSize: "large" }}></i>Save Labels</span>
+                                    <div className="row jutify-content-center mt-2 " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
                                         <div className="col-md-12 mt-2 " >
                                             <label class="form-label " style={{ color: "white" }}>File Name</label>
                                             <select class="form-select" aria-label="Default select example">
@@ -360,8 +408,8 @@ export default function Header() {
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
                                             </select>
-                                            <div className="col-md-12 mt-4 mb-2" >
-                                                <button type="button" className="btn btn-primary w-50 " style={{ color: "white" }} >Save</button>
+                                            <div className="col-md-12 mt-4 mb-2 text-center " >
+                                                <button type="button" className="btn w-50 " style={{ color: "white", backgroundColor:"#14ccb0" }} >Save</button>
                                             </div>
 
                                         </div>
