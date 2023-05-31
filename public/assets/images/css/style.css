@@ -10832,7 +10832,7 @@
   .app-nav {
     color: #5d6778;
     display: block;
-    padding: 0;
+    padding: 10px;
     width: 100%;
   }
   .app-nav .app-menu {

@@ -1,65 +1,83 @@
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Logo from "../assets/images/Prostate-01.png"
+import Logo from "../assets/images/Prostate-02.png"
 import Profile from "../assets/images/profile.png"
 import { FiUpload } from 'react-icons/fi';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdOutlineColorLens } from 'react-icons/md';
 import { BsDatabaseGear } from 'react-icons/bs';
 import { BiLabel } from 'react-icons/bi';
+import { useDropzone } from 'react-dropzone';
 
 
 
 
 
-export default function Header() {
+export default function Header({setFiles,files}) {
 
-const [sidbar, setSidbar]=useState("sidepanel-visible")
+    const [sidbar, setSidbar] = useState("sidepanel-visible")
 
-useEffect(() => {
-    SidbeFunc()
+    useEffect(() => {
+        SidbeFunc()
 
-}, [])
+    }, [])
 
 
-const SidbeFunc = ()=>{
-     
-    let w = window.innerWidth;
-    if(w >= 1200) {
-setSidbar("sidepanel-visible")
-        console.log('larger');
+    const SidbeFunc = () => {
+
+        let w = window.innerWidth;
+        if (w >= 1200) {
+            setSidbar("sidepanel-visible")
+            console.log('larger');
+
+
+        } else {
+            setSidbar("sidepanel-hidden")
+
+
+            console.log('smaller');
+
+        }
+    };
+
+
+    const SidbeFunc2 = () => {
+
+
+        if (sidbar === "sidepanel-visible") {
+            console.log('visible');
+            setSidbar("sidepanel-hidden")
+
+
+        } else {
+            setSidbar("sidepanel-visible")
+
+            console.log('hidden');
+
+        }
+
+
+
+    };
     
-      
-    } else {
-setSidbar("sidepanel-hidden")
-
-      
-        console.log('smaller');
-  
-    }
-  };
-  
-
-  const SidbeFunc2 = ()=>{
- 
-
-    if (sidbar==="sidepanel-visible") {
-      console.log('visible');
-      setSidbar("sidepanel-hidden")
+    // const [files, setFiles] = useState([]);
+    // console.log("file",setFiles)
    
-      
-    } else {
-      setSidbar("sidepanel-visible")
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: {
+            'image/*': []
+        },
+        maxFiles: 40,
+        onDrop: acceptedFiles => {
+            
+            setFiles(acceptedFiles.map(file => Object.assign(file, {
+                preview: URL.createObjectURL(file)
+            })));
 
-      console.log('hidden');
-   
-    }
- 
-  
-  
-  };
-  
+        }
+    });
 
+  
 
     return (
         <div>
@@ -71,7 +89,7 @@ setSidbar("sidepanel-hidden")
                             <div className="row justify-content-between align-items-center">
                                 <div className="col-auto">
                                     <Link
-                                    onClick={SidbeFunc2}
+                                        onClick={SidbeFunc2}
                                         id="sidepanel-toggler"
                                         className="sidepanel-toggler d-inline-block d-xl-none"
                                         to="#"
@@ -241,7 +259,7 @@ setSidbar("sidepanel-hidden")
                                                         {/*//col*/}
                                                     </div>
                                                     {/*//row*/}
-                                                    <Link className="link-mask" to="#"/>
+                                                    <Link className="link-mask" to="#" />
                                                 </div>
                                                 {/*//item*/}
                                                 <div className="item p-3">
@@ -280,13 +298,13 @@ setSidbar("sidepanel-hidden")
                                     <div className="app-utility-item">
                                         <Link to="#" title="">
 
-                                        <FaPencilAlt/>
+                                            <FaPencilAlt />
                                         </Link>
                                     </div>
                                     <div className="app-utility-item">
                                         <Link to="#" title="">
 
-                                        <MdOutlineColorLens/>
+                                            <MdOutlineColorLens />
                                         </Link>
                                     </div>
                                     {/* PROFILE  */}
@@ -307,7 +325,7 @@ setSidbar("sidepanel-hidden")
                                         >
                                             <li>
                                                 <Link className="dropdown-item" to="#">
-                                                   Profile
+                                                    Profile
                                                 </Link>
                                             </li>
                                             {/* <li>
@@ -319,7 +337,7 @@ setSidbar("sidepanel-hidden")
                                                 <hr className="dropdown-divider" />
                                             </li>
                                             <li>
-                                                <Link className="dropdown-item"to="#">
+                                                <Link className="dropdown-item" to="#">
                                                     Log Out
                                                 </Link>
                                             </li>
@@ -359,9 +377,13 @@ setSidbar("sidepanel-hidden")
 
                                 <div className=' mt-4' style={{ backgroundColor: "rgb(63 63 63)" }} >
                                     <span style={{ color: "#14ccb0", fontSize: "large" }} ><i className='mx-2'> <FiUpload size="2em" /></i>Select NifTi File </span>
+                                    <div {...getRootProps({ className: 'dropzone' })} style={{ border: "2px dotted  grey", width: "100%", height: "100%", padding: "30px", backgroundColor: "#f8f8f8", marginTop: "10px" }}>
+                                        <input {...getInputProps()} />
+                                        <p className='text-center'>Drag 'n' drop some files here, or click to select files</p>
+                                    </div>
                                     <div className="row jutify-content-center text-center mb-2">
                                         <div className="col-md-12 mt-4 d-grid gap-2" >
-                                            <button type="button" className="btn " style={{ color: "white" , backgroundColor:"#14ccb0"}}>Upload</button>
+                                            <button type="button" className="btn " style={{ color: "white", backgroundColor: "#14ccb0" }}>Upload</button>
                                         </div>
 
                                     </div>
@@ -376,17 +398,20 @@ setSidbar("sidepanel-hidden")
                                         <div className="col-md-12 mt-2 " >
                                             <label class="form-label " style={{ color: "white" }}>Modal</label>
                                             <select class="form-select" aria-label="Default select example">
-                                                <option selected>Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                <option selected>Select Modal...</option>
+                                                <option value="1">Show whole gland segmentation</option>
+                                                <option value="2">Show central gland segmentation</option>
+                                                <option value="3">Show peripheral zone</option>
+                                                <option value="3">Show Pirad Score</option>
+                                                <option value="3">Show Legion segmentation</option>
+
                                             </select>
                                             <div className="col-md-12 mt-4 text-center " >
-                                                <button type="button" className="btn w-50 " style={{ color: "white" , backgroundColor:"#14ccb0"}} >Run</button>
+                                                <button type="button" className="btn w-50 " style={{ color: "white", backgroundColor: "#14ccb0" }} >Run</button>
                                             </div>
                                             <hr style={{ color: "white" }} />
                                             <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped " style={{ width: "75%",backgroundColor:"#14ccb0" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar progress-bar-striped " style={{ width: "75%", backgroundColor: "#14ccb0" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
 
@@ -403,13 +428,15 @@ setSidbar("sidepanel-hidden")
                                         <div className="col-md-12 mt-2 " >
                                             <label class="form-label " style={{ color: "white" }}>File Name</label>
                                             <select class="form-select" aria-label="Default select example">
-                                                <option selected>Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                <option selected>Select File Name...</option>
+                                                <option value="1">Nifti</option>
+                                                <option value="2">Dicom</option>
+                                                <option value="3">jpeg</option>
+                                                <option value="3">png</option>
+
                                             </select>
                                             <div className="col-md-12 mt-4 mb-2 text-center " >
-                                                <button type="button" className="btn w-50 " style={{ color: "white", backgroundColor:"#14ccb0" }} >Save</button>
+                                                <button type="button" className="btn w-50 " style={{ color: "white", backgroundColor: "#14ccb0" }} >Save</button>
                                             </div>
 
                                         </div>
