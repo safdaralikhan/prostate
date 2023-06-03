@@ -13,7 +13,7 @@ import { useDropzone } from 'react-dropzone';
 
 
 
-export default function Header({setFiles,files}) {
+export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
 
     const [sidbar, setSidbar] = useState("sidepanel-visible")
 
@@ -59,17 +59,17 @@ export default function Header({setFiles,files}) {
 
 
     };
-    
+
     // const [files, setFiles] = useState([]);
     // console.log("file",setFiles)
-   
+
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': []
         },
         maxFiles: 40,
         onDrop: acceptedFiles => {
-            
+
             setFiles(acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
             })));
@@ -77,7 +77,7 @@ export default function Header({setFiles,files}) {
         }
     });
 
-  
+
 
     return (
         <div>
@@ -397,17 +397,17 @@ export default function Header({setFiles,files}) {
                                     <div className="row jutify-content-center mt-3 " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
                                         <div className="col-md-12 mt-2 " >
                                             <label class="form-label " style={{ color: "white" }}>Modal</label>
-                                            <select class="form-select" aria-label="Default select example">
+                                            <select value={action} class="form-select" aria-label="Default select example" onChange={(e)=>setAction(e.target.value)}>
                                                 <option selected>Select Modal...</option>
-                                                <option value="1">Show whole gland segmentation</option>
-                                                <option value="2">Show central gland segmentation</option>
-                                                <option value="3">Show peripheral zone</option>
+                                                <option value="whole">Show whole gland segmentation</option>
+                                                <option value="central">Show central gland segmentation</option>
+                                                <option value="peripheral">Show peripheral zone</option>
                                                 <option value="3">Show Pirad Score</option>
-                                                <option value="3">Show Legion segmentation</option>
+                                                <option value="4">Show Legion segmentation</option>
 
                                             </select>
                                             <div className="col-md-12 mt-4 text-center " >
-                                                <button type="button" className="btn w-50 " style={{ color: "white", backgroundColor: "#14ccb0" }} >Run</button>
+                                                <button onClick={UploadApi} type="button" className="btn w-50 " style={{ color: "white", backgroundColor: "#14ccb0" }} >Run</button>
                                             </div>
                                             <hr style={{ color: "white" }} />
                                             <div class="progress mb-2">
