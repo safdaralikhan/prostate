@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from './header';
+import Header from './Header';
 // import Svg from "../assets/images/img1.jpeg"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Loader from "../components/loader/Loader"
