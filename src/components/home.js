@@ -31,7 +31,7 @@ export default function Home(props) {
       for (var i = 0; i < files.length; i++) {
         formdata.append("files", files[i]);
       }
-      formdata.append("action", action);
+      // formdata.append("action", action);
 
 
       var requestOptions = {
@@ -39,17 +39,17 @@ export default function Home(props) {
         body: formdata,
         redirect: 'follow'
       };
-      fetch(`${BaseUrl.baseUrl}prostrate/prediction/`, requestOptions)
+      fetch(`${BaseUrl.baseUrl}prostrate/prediction/?action=${action}`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoad(false);
           if (result.status) {
             console.log("result", action)
-            if (action === "whole") {
+            if (action === "Whole") {
 
               setData(result.predictedframes)
 
-            } else if (action === "peripheral") {
+            } else if (action === "Peripheral") {
 
               setPeripheral(result.predictedframes)
             } else {

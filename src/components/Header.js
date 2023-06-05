@@ -383,9 +383,9 @@ const [sidbar, setSidbar] = useState("sidepanel-visible")
                                             <label className="form-label " style={{ color: "white" }}>Modal</label>
                                             <select value={action} className="form-select" aria-label="Default select example" onChange={(e) => setAction(e.target.value)}>
                                                 <option defaultValue={""}>Select Modal...</option>
-                                                <option value="whole">Show whole gland segmentation</option>
-                                                <option value="central">Show central gland segmentation</option>
-                                                <option value="peripheral">Show peripheral zone</option>
+                                                <option value="Whole">Show whole gland segmentation</option>
+                                                <option value="Central">Show central gland segmentation</option>
+                                                <option value="Peripheral">Show peripheral zone</option>
                                                 <option value="3">Show Pirad Score</option>
                                                 <option value="4">Show Legion segmentation</option>
 
@@ -394,9 +394,9 @@ const [sidbar, setSidbar] = useState("sidepanel-visible")
                                                 <button onClick={UploadApi} type="button" className="btn w-50 " style={{ color: "white", backgroundColor: "#14ccb0" }} >Run</button>
                                             </div>
                                             <hr style={{ color: "white" }} />
-                                            <div className="progress mb-2">
+                                            {/* <div className="progress mb-2">
                                                 <div className="progress-bar progress-bar-striped " style={{ width: "75%", backgroundColor: "#14ccb0" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                     </div>
