@@ -16,7 +16,7 @@ export default function Home(props) {
   const [peripheral, setPeripheral] = useState([]);
   const [central, setCentral] = useState([]);
 // check condition state 
-  const [action, setAction] = useState([]);
+  const [action, setAction] = useState("");
 
   console.log("files", files[0])
 

@@ -10,14 +10,12 @@ import { BiLabel } from 'react-icons/bi';
 import { useDropzone } from 'react-dropzone';
 
 
+export default function Header({ setFiles, files, setAction, action, UploadApi }) {
 
-
-
-export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
-
-    const [sidbar, setSidbar] = useState("sidepanel-visible")
+const [sidbar, setSidbar] = useState("sidepanel-visible")
 
     useEffect(() => {
+        
         SidbeFunc()
 
     }, [])
@@ -26,42 +24,28 @@ export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
     const SidbeFunc = () => {
 
         let w = window.innerWidth;
-        if (w >= 1200) {
+        if (w >= 1100) {
             setSidbar("sidepanel-visible")
-            console.log('larger');
-
-
+       
         } else {
             setSidbar("sidepanel-hidden")
-
-
-            console.log('smaller');
 
         }
     };
 
 
-    const SidbeFunc2 = () => {
+   function  SidbeFunc2 ()  {
 
-
-        if (sidbar === "sidepanel-visible") {
-            console.log('visible');
+        if (sidbar === "sidepanel-visible") { 
             setSidbar("sidepanel-hidden")
-
 
         } else {
             setSidbar("sidepanel-visible")
-
-            console.log('hidden');
-
         }
-
-
 
     };
 
-    // const [files, setFiles] = useState([]);
-    // console.log("file",setFiles)
+   
 
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
@@ -361,7 +345,7 @@ export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
                             ×
                         </Link>
                         <div className="app-branding">
-                            <Link className="app-logo" href="index.html">
+                            <Link className="app-logo" to="#">
                                 <img
                                     className="logo-icon me-2"
                                     src={Logo}
@@ -379,7 +363,7 @@ export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
                                     <span style={{ color: "#14ccb0", fontSize: "large" }} ><i className='mx-2'> <FiUpload size="2em" /></i>Select NifTi File </span>
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ border: "2px dotted  grey", width: "100%", height: "100%", padding: "30px", backgroundColor: "#f8f8f8", marginTop: "10px" }}>
                                         <input {...getInputProps()} />
-                                        <p className='text-center'>Drag 'n' drop some files here, or click to select files</p>
+                                        <p className='text-center'>Drag or Upload Some images</p>
                                     </div>
                                     <div className="row jutify-content-center text-center mb-2">
                                         <div className="col-md-12 mt-4 d-grid gap-2" >
@@ -396,9 +380,9 @@ export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
                                     <span className='mb-2' style={{ color: "white", fontSize: "15px" }}><BsDatabaseGear size="2em" /><i className='mx-2' > </i>Segmentation options</span>
                                     <div className="row jutify-content-center mt-3 " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
                                         <div className="col-md-12 mt-2 " >
-                                            <label class="form-label " style={{ color: "white" }}>Modal</label>
-                                            <select value={action} class="form-select" aria-label="Default select example" onChange={(e)=>setAction(e.target.value)}>
-                                                <option selected>Select Modal...</option>
+                                            <label className="form-label " style={{ color: "white" }}>Modal</label>
+                                            <select value={action} className="form-select" aria-label="Default select example" onChange={(e) => setAction(e.target.value)}>
+                                                <option defaultValue={""}>Select Modal...</option>
                                                 <option value="whole">Show whole gland segmentation</option>
                                                 <option value="central">Show central gland segmentation</option>
                                                 <option value="peripheral">Show peripheral zone</option>
@@ -410,8 +394,8 @@ export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
                                                 <button onClick={UploadApi} type="button" className="btn w-50 " style={{ color: "white", backgroundColor: "#14ccb0" }} >Run</button>
                                             </div>
                                             <hr style={{ color: "white" }} />
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped " style={{ width: "75%", backgroundColor: "#14ccb0" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress mb-2">
+                                                <div className="progress-bar progress-bar-striped " style={{ width: "75%", backgroundColor: "#14ccb0" }} role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
 
@@ -426,9 +410,9 @@ export default function Header({ setFiles, files ,setAction,action,UploadApi}) {
                                     <span style={{ color: "white", fontSize: "15px" }}> <BiLabel size="2em" /><i className='mx-2' style={{ color: "white", fontSize: "large" }}></i>Save Labels</span>
                                     <div className="row jutify-content-center mt-2 " style={{ backgroundColor: "rgb(63 63 63)", borderRadius: "15px", border: "1px solid white" }}>
                                         <div className="col-md-12 mt-2 " >
-                                            <label class="form-label " style={{ color: "white" }}>File Name</label>
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>Select File Name...</option>
+                                            <label className="form-label " style={{ color: "white" }}>File Name</label>
+                                            <select className="form-select" aria-label="Default select example">
+                                                <option defaultValue={""}>Select File Name...</option>
                                                 <option value="1">Nifti</option>
                                                 <option value="2">Dicom</option>
                                                 <option value="3">jpeg</option>
