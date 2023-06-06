@@ -15,11 +15,41 @@ export default function Home(props) {
   const [Data, setData] = useState([]);
   const [peripheral, setPeripheral] = useState([]);
   const [central, setCentral] = useState([]);
-// check condition state 
+  // check condition state 
   const [action, setAction] = useState("");
+  const [mrixaxis, setMrixaxis] = useState(0);
+  const [mriyaxis, setMriyaxis] = useState(0);
+  const [wholexaxis, setWholexaxis] = useState(0);
+  const [wholeyaxis, setWholeyaxis] = useState(0);
+  const [centralxaxis, setCentralxaxis] = useState(0);
+  const [centralyaxis, setCentralyaxis] = useState(0);
+  const [perixaxis, setPerixaxis] = useState(0);
+  const [periyaxis, setPeriyaxis] = useState(0);
 
-  console.log("files", files[0])
 
+  const OnMouse = (e, key) => {
+    console.log("enativeEvent", e, key)
+    if (key === "mri") {
+
+      setMrixaxis(e.nativeEvent.offsetX)
+      setMriyaxis(e.nativeEvent.offsetY)
+    }
+    else if (key === "whole") {
+
+      setWholexaxis(e.nativeEvent.offsetX)
+      setWholeyaxis(e.nativeEvent.offsetY)
+    }
+    else if (key === "central") {
+
+      setCentralxaxis(e.nativeEvent.offsetX)
+      setCentralyaxis(e.nativeEvent.offsetY)
+    }
+    else {
+      setPerixaxis(e.nativeEvent.offsetX)
+      setPeriyaxis(e.nativeEvent.offsetY)
+    }
+
+  }
 
 
   const UploadApi = () => {
@@ -79,6 +109,9 @@ export default function Home(props) {
 
     }
   }
+
+
+
   return (
     <>
       {Load ? <Loader /> : null}
@@ -97,17 +130,20 @@ export default function Home(props) {
                       <TransformWrapper >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                           <React.Fragment>
-                            <div className="tools mt-2 p-2">
+                            <div className="tools mt-2 p-2" >
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
                             </div>
-                            <TransformComponent >
-
-                              <img src={files.preview} alt="test" className='mt-3' style={{ width: "100%" }} />
-
-                              {/* <div>Example text</div> */}
-                            </TransformComponent>
+                            <div className=" mt-2 p-2 d-flex justify-content-start" >
+                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{mrixaxis} x-Axis</button>
+                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{mriyaxis} y-Axis</button>
+                            </div>
+                            <div onMouseMove={(e) => OnMouse(e, "mri")}>
+                              <TransformComponent >
+                                <img src={files.preview} alt="test" className='mt-3' style={{ width: "100%" }} />
+                              </TransformComponent>
+                            </div>
                           </React.Fragment>
                         )}
                       </TransformWrapper>
@@ -120,9 +156,7 @@ export default function Home(props) {
                 <div className="section-intro" style={{ backgroundColor: "whitesmoke", overflow: "scroll", height: "500px" }}>
                   <h3 className="section-title p-3">Whole Viewer</h3>
                   {Data.map((v, i) => {
-
                     return <>
-
                       <TransformWrapper >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                           <React.Fragment>
@@ -131,10 +165,16 @@ export default function Home(props) {
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
                             </div>
-                            <TransformComponent >
-                              <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                              {/* <div>Example text</div> */}
-                            </TransformComponent>
+                            <div className=" mt-2 p-2 d-flex justify-content-start" >
+                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholexaxis} x-Axis</button>
+                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholeyaxis} y-Axis</button>
+                            </div>
+                            <div onMouseMove={(e) => OnMouse(e, "whole")}>
+                              <TransformComponent >
+                                <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                {/* <div>Example text</div> */}
+                              </TransformComponent>
+                            </div>
                           </React.Fragment>
                         )}
                       </TransformWrapper>
@@ -150,7 +190,6 @@ export default function Home(props) {
                 <div className="section-intro" style={{ backgroundColor: "whitesmoke", overflow: "scroll", height: "500px" }}>
                   <h3 className="section-title p-3">Central Viewer</h3>
                   {central.map((v, i) => {
-
                     return <>
                       <TransformWrapper >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
@@ -160,16 +199,21 @@ export default function Home(props) {
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
                             </div>
-                            <TransformComponent >
-                              <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                              {/* <div>Example text</div> */}
-                            </TransformComponent>
+                            <div className=" mt-2 p-2 d-flex justify-content-start" >
+                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{centralxaxis} x-Axis</button>
+                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{centralyaxis} y-Axis</button>
+                            </div>
+                            <div onMouseMove={(e) => OnMouse(e, "central")}>
+                              <TransformComponent >
+                                <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                {/* <div>Example text</div> */}
+                              </TransformComponent>
+                            </div>
                           </React.Fragment>
                         )}
                       </TransformWrapper>
                     </>
                   })}
-
 
                 </div>
               </div>
@@ -187,10 +231,16 @@ export default function Home(props) {
                                 <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
                                 <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
                               </div>
-                              <TransformComponent >
-                                <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                {/* <div>Example text</div> */}
-                              </TransformComponent>
+                              <div className=" mt-2 p-2 d-flex justify-content-start" >
+                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{perixaxis} x-Axis</button>
+                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{periyaxis} y-Axis</button>
+                              </div>
+                              <div onMouseMove={(e) => OnMouse(e, "peri")}>
+                                <TransformComponent >
+                                  <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                  {/* <div>Example text</div> */}
+                                </TransformComponent>
+                              </div>
                             </React.Fragment>
                           )}
                         </TransformWrapper>
@@ -201,15 +251,11 @@ export default function Home(props) {
                 </div>
               </div>
             </div>
-
           </div>
           {/*//container-fluid*/}
         </div>
-
       </div>
-
     </>
-
   );
 }
 
