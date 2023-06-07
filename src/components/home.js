@@ -5,7 +5,8 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Loader from "../components/loader/Loader"
 import { BaseUrl } from "../baseurl/BaseUrl"
 import { toast } from 'react-toastify';
-
+import * as markerjs2 from "markerjs2";
+import { useRef } from 'react';
 
 export default function Home(props) {
   const [Load, setLoad] = useState(false);
@@ -26,9 +27,18 @@ export default function Home(props) {
   const [perixaxis, setPerixaxis] = useState(0);
   const [periyaxis, setPeriyaxis] = useState(0);
 
+  const imgRef = useRef([]);
+  const imgRef2 = useRef([]);
+  const imgRef3 = useRef([]);
+  const imgRef4 = useRef([]);
 
+
+
+
+
+  console.log("createRef", imgRef)
   const OnMouse = (e, key) => {
-    console.log("enativeEvent", e, key)
+    // console.log("enativeEvent", e, key)
     if (key === "mri") {
 
       setMrixaxis(e.nativeEvent.offsetX)
@@ -50,6 +60,85 @@ export default function Home(props) {
     }
 
   }
+
+
+  
+
+  function showMarkerArea(i) {
+  
+    if (imgRef.current !== null) {
+      // create a marker.js MarkerArea
+      const markerArea = new markerjs2.MarkerArea(imgRef.current[i]);
+      // attach an event handler to assign annotated image back to our image element
+      markerArea.addEventListener("render", (event) => {
+        if (imgRef.current[i]) {
+          imgRef.current[i].src = event.dataUrl;
+        }
+      });
+      // launch marker.js
+      markerArea.show();
+    }
+  }
+
+  function showMarkerArea2(i) {
+    console.log("safdar2")
+    if (imgRef2.current !== null) {
+      // create a marker.js MarkerArea
+      const markerArea = new markerjs2.MarkerArea(imgRef2.current[i]);
+      // attach an event handler to assign annotated image back to our image element
+      markerArea.addEventListener("render", (event) => {
+        if (imgRef2.current[i]) {
+          imgRef2.current[i].src = event.dataUrl;
+    console.log("safdar2==>",imgRef2.current[i].src = event.dataUrl)
+
+        }
+      });
+    
+      // launch marker.js
+      markerArea.show();
+    }
+  }
+
+  function showMarkerArea3(i) {
+    console.log("safdar2")
+    if (imgRef3.current !== null) {
+      // create a marker.js MarkerArea
+      const markerArea = new markerjs2.MarkerArea(imgRef3.current[i]);
+      // attach an event handler to assign annotated image back to our image element
+      markerArea.addEventListener("render", (event) => {
+        if (imgRef3.current[i]) {
+          imgRef3.current[i].src = event.dataUrl;
+   
+
+        }
+      });
+    
+      // launch marker.js
+      markerArea.show();
+    }
+  }
+
+ 
+  function showMarkerArea4(i) {
+    console.log("safdar2")
+    if (imgRef4.current !== null) {
+      // create a marker.js MarkerArea
+      const markerArea = new markerjs2.MarkerArea(imgRef4.current[i]);
+      // attach an event handler to assign annotated image back to our image element
+      markerArea.addEventListener("render", (event) => {
+        if (imgRef4.current[i]) {
+          imgRef4.current[i].src = event.dataUrl;
+  
+
+        }
+      });
+    
+      // launch marker.js
+      markerArea.show();
+    }
+  }
+
+ 
 
 
   const UploadApi = () => {
@@ -127,7 +216,7 @@ export default function Home(props) {
                   <h3 className="section-title p-3">MRI Viewer</h3>
                   {files.map((files, i) => {
                     return <>
-                      <TransformWrapper >
+                      <TransformWrapper key={i} >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                           <React.Fragment>
                             <div className="tools mt-2 p-2" >
@@ -141,7 +230,10 @@ export default function Home(props) {
                             </div>
                             <div onMouseMove={(e) => OnMouse(e, "mri")}>
                               <TransformComponent >
-                                <img src={files.preview} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                <div onClick={() => showMarkerArea(i)}>
+                                  <img ref={(el) => imgRef.current[i] = el} src={files.preview} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                </div>
+
                               </TransformComponent>
                             </div>
                           </React.Fragment>
@@ -170,9 +262,10 @@ export default function Home(props) {
                               <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholeyaxis} y-Axis</button>
                             </div>
                             <div onMouseMove={(e) => OnMouse(e, "whole")}>
-                              <TransformComponent >
-                                <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                {/* <div>Example text</div> */}
+                              <TransformComponent key={i}>
+                                <div onClick={() => showMarkerArea2(i)}>
+                                <img crossorigin="anonymous"  ref={(el) => imgRef2.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                </div>
                               </TransformComponent>
                             </div>
                           </React.Fragment>
@@ -205,8 +298,9 @@ export default function Home(props) {
                             </div>
                             <div onMouseMove={(e) => OnMouse(e, "central")}>
                               <TransformComponent >
-                                <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                {/* <div>Example text</div> */}
+                                <div onClick={() => showMarkerArea3(i)}>
+                                  <img crossorigin="anonymous" ref={(el) => imgRef3.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                </div>
                               </TransformComponent>
                             </div>
                           </React.Fragment>
@@ -237,8 +331,9 @@ export default function Home(props) {
                               </div>
                               <div onMouseMove={(e) => OnMouse(e, "peri")}>
                                 <TransformComponent >
-                                  <img src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                  {/* <div>Example text</div> */}
+                                  <div onClick={() => showMarkerArea4(i)}>
+                                    <img crossorigin="anonymous" ref={(el) => imgRef4.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                  </div>
                                 </TransformComponent>
                               </div>
                             </React.Fragment>

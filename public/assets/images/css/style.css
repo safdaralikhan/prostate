@@ -11541,8 +11541,23 @@
 
   .transform-component-module_content__FBWxo{
     width: 100% !important;
+    display: block !important;
   
   }
   .transform-component-module_wrapper__SPB86{
     width: 100% !important;
   }
+
+
+  .__markerjs2_{
+
+    top: 300px !important;
+    left: 500px !important
+
+  }
+   /* .__markerjs2__0_{
+    top: 220px !important;
+    left: 290px !important
+
+  } */
+
