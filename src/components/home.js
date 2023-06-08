@@ -18,6 +18,7 @@ export default function Home(props) {
   const [central, setCentral] = useState([]);
   // check condition state 
   const [action, setAction] = useState("");
+  // xias state 
   const [mrixaxis, setMrixaxis] = useState(0);
   const [mriyaxis, setMriyaxis] = useState(0);
   const [wholexaxis, setWholexaxis] = useState(0);
@@ -26,17 +27,17 @@ export default function Home(props) {
   const [centralyaxis, setCentralyaxis] = useState(0);
   const [perixaxis, setPerixaxis] = useState(0);
   const [periyaxis, setPeriyaxis] = useState(0);
+// onhover state 
+  const [style, setStyle] = useState("");
+  const [style2, setStyle2] = useState("");
+  const [style3, setStyle3] = useState("");
+  const [style4, setStyle4] = useState("");
 
   const imgRef = useRef([]);
   const imgRef2 = useRef([]);
   const imgRef3 = useRef([]);
   const imgRef4 = useRef([]);
 
-
-
-
-
-  console.log("createRef", imgRef)
   const OnMouse = (e, key) => {
     // console.log("enativeEvent", e, key)
     if (key === "mri") {
@@ -61,11 +62,8 @@ export default function Home(props) {
 
   }
 
-
-  
-
   function showMarkerArea(i) {
-  
+
     if (imgRef.current !== null) {
       // create a marker.js MarkerArea
       const markerArea = new markerjs2.MarkerArea(imgRef.current[i]);
@@ -89,11 +87,11 @@ export default function Home(props) {
       markerArea.addEventListener("render", (event) => {
         if (imgRef2.current[i]) {
           imgRef2.current[i].src = event.dataUrl;
-    console.log("safdar2==>",imgRef2.current[i].src = event.dataUrl)
+          console.log("safdar2==>", imgRef2.current[i].src = event.dataUrl)
 
         }
       });
-    
+
       // launch marker.js
       markerArea.show();
     }
@@ -108,17 +106,16 @@ export default function Home(props) {
       markerArea.addEventListener("render", (event) => {
         if (imgRef3.current[i]) {
           imgRef3.current[i].src = event.dataUrl;
-   
+
 
         }
       });
-    
+
       // launch marker.js
       markerArea.show();
     }
   }
 
- 
   function showMarkerArea4(i) {
     console.log("safdar2")
     if (imgRef4.current !== null) {
@@ -128,19 +125,15 @@ export default function Home(props) {
       markerArea.addEventListener("render", (event) => {
         if (imgRef4.current[i]) {
           imgRef4.current[i].src = event.dataUrl;
-  
+
 
         }
       });
-    
+
       // launch marker.js
       markerArea.show();
     }
   }
-
- 
-
-
   const UploadApi = () => {
     if (files.length > 0) {
       setLoad(true);
@@ -212,67 +205,82 @@ export default function Home(props) {
             <hr className="mb-4" />
             <div className="row g-4 settings-section">
               <div className="col-12 col-md-6">
-                <div className="section-intro" style={{ backgroundColor: "whitesmoke", overflow: "scroll", height: "500px" }}>
+                <div className="section-intro" style={{ backgroundColor: "whitesmoke", }}>
                   <h3 className="section-title p-3">MRI Viewer</h3>
-                  {files.map((files, i) => {
-                    return <>
-                      <TransformWrapper key={i} >
-                        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                          <React.Fragment>
-                            <div className="tools mt-2 p-2" >
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
-                            </div>
-                            <div className=" mt-2 p-2 d-flex justify-content-start" >
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{mrixaxis} x-Axis</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{mriyaxis} y-Axis</button>
-                            </div>
-                            <div onMouseMove={(e) => OnMouse(e, "mri")}>
-                              <TransformComponent >
-                                <div onClick={() => showMarkerArea(i)}>
-                                  <img ref={(el) => imgRef.current[i] = el} src={files.preview} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                </div>
+                  <div style={{ overflow: "scroll", height: "500px" }}>
+                    {files.map((files, i) => {
+                      return <div onMouseLeave={() => setStyle("")} onMouseEnter={() => setStyle(i)}>
 
-                              </TransformComponent>
-                            </div>
-                          </React.Fragment>
-                        )}
-                      </TransformWrapper>
-                      <hr />
-                    </>
-                  })}
+                        <TransformWrapper key={i}  >
+                          {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                            <React.Fragment>
+                              {style === i ?
+                                <>
+                                  <div className="tools mt-2 p-2" >
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
+                                  </div>
+                                  <div className=" mt-2 p-2 d-flex justify-content-start" >
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{mrixaxis} x-Axis</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{mriyaxis} y-Axis</button>
+                                  </div>
+                                </>
+                                : ""}
+                              <div onMouseMove={(e) => OnMouse(e, "mri")}>
+                                <TransformComponent >
+                                  <div onClick={() => showMarkerArea(i)}>
+                                    <img ref={(el) => imgRef.current[i] = el} src={files.preview} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                  </div>
+
+                                </TransformComponent>
+                              </div>
+                            </React.Fragment>
+                          )}
+                        </TransformWrapper>
+                        <hr />
+                      </div>
+                    })}
+                  </div>
                 </div>
               </div>
               <div className="col-12 col-md-6">
-                <div className="section-intro" style={{ backgroundColor: "whitesmoke", overflow: "scroll", height: "500px" }}>
+                <div className="section-intro" style={{ backgroundColor: "whitesmoke", }}>
                   <h3 className="section-title p-3">Whole Viewer</h3>
-                  {Data.map((v, i) => {
-                    return <>
-                      <TransformWrapper >
-                        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                          <React.Fragment>
-                            <div className="tools mt-2">
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
-                            </div>
-                            <div className=" mt-2 p-2 d-flex justify-content-start" >
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholexaxis} x-Axis</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholeyaxis} y-Axis</button>
-                            </div>
-                            <div onMouseMove={(e) => OnMouse(e, "whole")}>
-                              <TransformComponent key={i}>
-                                <div onClick={() => showMarkerArea2(i)}>
-                                <img crossorigin="anonymous"  ref={(el) => imgRef2.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                </div>
-                              </TransformComponent>
-                            </div>
-                          </React.Fragment>
-                        )}
-                      </TransformWrapper>
-                    </>
-                  })}
+                  <div style={{ overflow: "scroll", height: "500px" }}>
+                    {Data.map((v, i) => {
+                      return <div onMouseLeave={() => setStyle2("")} onMouseEnter={() => setStyle2(i)}>
+                        <TransformWrapper >
+                          {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                            <React.Fragment>
+                              {style2 === i ?
+                                <>
+                                  <div className="tools mt-2">
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
+                                  </div>
+                                  <div className=" mt-2 p-2 d-flex justify-content-start" >
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholexaxis} x-Axis</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{wholeyaxis} y-Axis</button>
+                                  </div>
+                                </>
+                                : ""}
+                              <div onMouseMove={(e) => OnMouse(e, "whole")}>
+                                <TransformComponent key={i}>
+                                  <div onClick={() => showMarkerArea2(i)}>
+                                    <img crossorigin="anonymous" ref={(el) => imgRef2.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                  </div>
+                                </TransformComponent>
+                              </div>
+                            </React.Fragment>
+                          )}
+                        </TransformWrapper>
+                        <hr />
+                      </div>
+
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -280,55 +288,67 @@ export default function Home(props) {
             <hr className="my-4" />
             <div className="row g-4 settings-section">
               <div className="col-12 col-md-6">
-                <div className="section-intro" style={{ backgroundColor: "whitesmoke", overflow: "scroll", height: "500px" }}>
+                <div className="section-intro" style={{ backgroundColor: "whitesmoke", }}>
                   <h3 className="section-title p-3">Central Viewer</h3>
-                  {central.map((v, i) => {
-                    return <>
-                      <TransformWrapper >
-                        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                          <React.Fragment>
-                            <div className="tools mt-2">
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
-                            </div>
-                            <div className=" mt-2 p-2 d-flex justify-content-start" >
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{centralxaxis} x-Axis</button>
-                              <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{centralyaxis} y-Axis</button>
-                            </div>
-                            <div onMouseMove={(e) => OnMouse(e, "central")}>
-                              <TransformComponent >
-                                <div onClick={() => showMarkerArea3(i)}>
-                                  <img crossorigin="anonymous" ref={(el) => imgRef3.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
-                                </div>
-                              </TransformComponent>
-                            </div>
-                          </React.Fragment>
-                        )}
-                      </TransformWrapper>
-                    </>
-                  })}
-
-                </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="section-intro" style={{ backgroundColor: "whitesmoke", overflow: "scroll", height: "500px" }}>
-                  <h3 className="section-title p-3">Peripheral Viewer</h3>
-                  {
-                    peripheral.map((v, i) => {
-                      return <>
+                  <div style={{ overflow: "scroll", height: "500px" }}>
+                    {central.map((v, i) => {
+                      return <div onMouseLeave={() => setStyle3("")} onMouseEnter={() => setStyle3(i)}>
                         <TransformWrapper >
                           {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                             <React.Fragment>
-                              <div className="tools mt-2">
-                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
-                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
-                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
+                              {style3 === i ?
+                                <>
+                                  <div className="tools mt-2">
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
+                                  </div>
+                                  <div className=" mt-2 p-2 d-flex justify-content-start" >
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{centralxaxis} x-Axis</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{centralyaxis} y-Axis</button>
+                                  </div>
+                                </>
+                                : ""}
+                              <div onMouseMove={(e) => OnMouse(e, "central")}>
+                                <TransformComponent >
+                                  <div onClick={() => showMarkerArea3(i)}>
+                                    <img crossorigin="anonymous" ref={(el) => imgRef3.current[i] = el} src={BaseUrl.baseUrl + v} alt="test" className='mt-3' style={{ width: "100%" }} />
+                                  </div>
+                                </TransformComponent>
                               </div>
-                              <div className=" mt-2 p-2 d-flex justify-content-start" >
-                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{perixaxis} x-Axis</button>
-                                <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{periyaxis} y-Axis</button>
-                              </div>
+                            </React.Fragment>
+                          )}
+                        </TransformWrapper>
+                        <hr />
+                      </div>
+                    })}
+
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="section-intro" style={{ backgroundColor: "whitesmoke", }}>
+                  <h3 className="section-title p-3">Peripheral Viewer</h3>
+                  <div style={{ overflow: "scroll", height: "500px" }}>
+                    {peripheral.map((v, i) => {
+                      return <div onMouseLeave={() => setStyle4("")} onMouseEnter={() => setStyle4(i)}>
+                        <TransformWrapper >
+                          {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                            <React.Fragment>
+                              {style4 === i ?
+                                <>
+                                  <div className="tools mt-2">
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomIn()}>ZOOM IN +</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => zoomOut()}> ZOOM OUT -</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "#14ccb0" }} onClick={() => resetTransform()}> RESET x</button>
+                                  </div>
+                                  <div className=" mt-2 p-2 d-flex justify-content-start" >
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{perixaxis} x-Axis</button>
+                                    <button className='btn btn-success mx-1' style={{ color: "white", backgroundColor: "black" }}>{periyaxis} y-Axis</button>
+                                  </div>
+                                </>
+                                : ""}
                               <div onMouseMove={(e) => OnMouse(e, "peri")}>
                                 <TransformComponent >
                                   <div onClick={() => showMarkerArea4(i)}>
@@ -339,9 +359,11 @@ export default function Home(props) {
                             </React.Fragment>
                           )}
                         </TransformWrapper>
-                      </>
-                    })
-                  }
+                        <hr />
+                      </div>
+                    })}
+
+                  </div>
 
                 </div>
               </div>
